@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Mare_Bogdan_Lab2_EB.Models.Book>
+﻿@model IEnumerable<Mare_Bogdan_Lab2_EB.Models.BookViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,20 +9,24 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["TitleSortParm"]">
+                    @Html.DisplayNameFor(model => model.Title)
+                </a>
             </th>
             <th>
                 Author
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["PriceSortParm"]">
+                    @Html.DisplayNameFor(model => model.Price)
+                </a>
             </th>
             <th></th>
         </tr>
@@ -35,13 +39,10 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @item.Author?.FirstName @item.Author?.LastName
+                    @item.FullName
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre.Name)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

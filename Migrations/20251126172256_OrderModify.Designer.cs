@@ -4,6 +4,7 @@ using Mare_Bogdan_Lab2_EB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mare_Bogdan_Lab2_EB.Migrations
 {
     [DbContext(typeof(Mare_Bogdan_Lab2_EBContext))]
-    partial class Mare_Bogdan_Lab2_EBContextModelSnapshot : ModelSnapshot
+    [Migration("20251126172256_OrderModify")]
+    partial class OrderModify
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

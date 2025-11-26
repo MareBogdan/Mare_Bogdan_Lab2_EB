@@ -17,5 +17,7 @@ namespace Mare_Bogdan_Lab2_EB.Data
 
         public DbSet<Author> Author { get; set; } = default!;
 
+        public DbSet<Order> Order { get; set; } = default!;
+
     }
 }
