@@ -15,18 +15,32 @@ namespace Mare_Bogdan_Lab2_EB.Data
                     return; // BD a fost creata anterior
                 }
 
+                // 1) Autori
+                var authors = new Author[]
+                {
+                    new Author { FirstName = "Mihail",  LastName = "Sadoveanu" },
+                    new Author { FirstName = "George",  LastName = "Calinescu" },
+                    new Author { FirstName = "Mircea",  LastName = "Eliade" }
+                };
+
+                context.Author.AddRange(authors);
+                context.SaveChanges(); // ca sa aiba ID-uri
+
+                // 2) Cărți (cu AuthorID)
                 context.Book.AddRange(
-                    new Book { Title = "Baltagul", Author = "Mihail Sadoveanu", Price = Decimal.Parse("22") },
-                    new Book { Title = "Enigma Otiliei", Author = "George Calinescu", Price = Decimal.Parse("18") },
-                    new Book { Title = "Maytrei", Author = "Mircea Eliade", Price = Decimal.Parse("27") }
+                    new Book { Title = "Baltagul", Price = Decimal.Parse("22"), AuthorID = authors[0].ID },
+                    new Book { Title = "Enigma Otiliei", Price = Decimal.Parse("18"), AuthorID = authors[1].ID },
+                    new Book { Title = "Maytrei", Price = Decimal.Parse("27"), AuthorID = authors[2].ID }
                 );
 
+                // 3) Genuri
                 context.Genre.AddRange(
                     new Genre { Name = "Roman" },
                     new Genre { Name = "Nuvela" },
                     new Genre { Name = "Poezie" }
                 );
 
+                // 4) Clienți
                 context.Customer.AddRange(
                     new Customer
                     {

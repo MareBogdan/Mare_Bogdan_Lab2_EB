@@ -14,5 +14,8 @@ namespace Mare_Bogdan_Lab2_EB.Data
         public DbSet<Book> Book { get; set; } = default!;
         public DbSet<Customer> Customer { get; set; } = default!;
         public DbSet<Genre> Genre { get; set; } = default!;
+
+        public DbSet<Author> Author { get; set; } = default!;
+
     }
 }
