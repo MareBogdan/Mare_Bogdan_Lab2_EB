@@ -48,7 +48,7 @@ namespace Mare_Bogdan_Lab2_EB.Controllers
         // GET: Books/Create
         public IActionResult Create()
         {
-            ViewData["GenreID"] = new SelectList(_context.Set<Genre>(), "ID", "ID");
+            ViewData["GenreID"] = new SelectList(_context.Set<Genre>(), "ID", "Name);
             return View();
         }
 
