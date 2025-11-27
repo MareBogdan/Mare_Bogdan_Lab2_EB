@@ -20,13 +20,16 @@ namespace Mare_Bogdan_Lab2_EB.Controllers
         }
 
         // GET: Books
-        public async Task<IActionResult> Index(string sortOrder)
+        // GET: Books
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            // pregătim parametrii de sortare pentru view (links în antet)
             ViewData["TitleSortParm"] = string.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
+            ViewData["AuthorSortParm"] = sortOrder == "Author" ? "author_desc" : "Author";
 
-            // query de bază: join între Book și Author și proiectăm în BookViewModel
+            ViewData["CurrentFilter"] = searchString;
+
+
             var books = from b in _context.Book
                         join a in _context.Author on b.AuthorID equals a.ID
                         select new BookViewModel
@@ -34,10 +37,16 @@ namespace Mare_Bogdan_Lab2_EB.Controllers
                             ID = b.ID,
                             Title = b.Title,
                             Price = b.Price,
-                            FullName = a.FullName
+                            FullName = a.FirstName + " " + a.LastName
                         };
 
-            // aplicăm sortarea în funcție de sortOrder
+            // FILTRARE după titlu (dacă avem ceva în searchString)
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                books = books.Where(s => s.Title.Contains(searchString));
+            }
+
+            // SORTARE (la fel ca înainte)
             switch (sortOrder)
             {
                 case "title_desc":
@@ -49,14 +58,22 @@ namespace Mare_Bogdan_Lab2_EB.Controllers
                 case "price_desc":
                     books = books.OrderByDescending(b => b.Price);
                     break;
+                case "Author":
+                    books = books.OrderBy(b => b.FullName);
+                    break;
+                case "author_desc":
+                    books = books.OrderByDescending(b => b.FullName);
+                    break;
                 default:
-                    books = books.OrderBy(b => b.Title);  // default: Title crescător
+                    books = books.OrderBy(b => b.Title); // default: sortare după Title
                     break;
             }
 
+
             return View(await books.AsNoTracking().ToListAsync());
         }
-        
+
+
 
         // GET: Books/Details/5
         public async Task<IActionResult> Details(int? id)

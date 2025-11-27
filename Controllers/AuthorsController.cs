@@ -26,6 +26,7 @@ namespace Mare_Bogdan_Lab2_EB.Controllers
         }
 
         // GET: Authors/Details/5
+        // GET: Authors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,7 +35,11 @@ namespace Mare_Bogdan_Lab2_EB.Controllers
             }
 
             var author = await _context.Author
+                .Include(a => a.Books)
+                    .ThenInclude(b => b.Genre)   // optional, ca să vezi și genul
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (author == null)
             {
                 return NotFound();
@@ -42,6 +47,7 @@ namespace Mare_Bogdan_Lab2_EB.Controllers
 
             return View(author);
         }
+
 
         // GET: Authors/Create
         public IActionResult Create()
